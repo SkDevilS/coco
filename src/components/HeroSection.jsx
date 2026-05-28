@@ -6,45 +6,27 @@ const HeroSection = () => {
   const slides = [
     {
       id: 1,
-      tag: 'New Collection',
       title: 'Discover Your',
       highlight: 'Signature Scent',
       subtitle: 'Immerse yourself in our exclusive collection of luxury fragrances, crafted to leave a lasting impression.',
-      cta: 'Shop Perfumes',
-      ctaSecondary: 'Explore Collection',
       image: '/perfume/6.jpeg',
-      accent: 'from-amber-500 to-rose-400',
-      badge1: { text: '50% Off', sub: 'This Week' },
-      badge2: { text: '500+', sub: 'Products' },
-      stat: '10K+ Happy Customers',
+      cta: 'Shop Perfumes',
     },
     {
       id: 2,
-      tag: 'Bestseller',
       title: 'Elegance In',
       highlight: 'Every Drop',
       subtitle: 'Experience the perfect blend of floral notes and woody undertones. A timeless fragrance for the modern aesthetic.',
-      cta: 'Discover Scents',
-      ctaSecondary: 'View Bestsellers',
       image: '/perfume/1.jpeg',
-      accent: 'from-rose-500 to-pink-500',
-      badge1: { text: 'Free Ship', sub: 'Above ₹500' },
-      badge2: { text: '50+', sub: 'Brands' },
-      stat: 'Clean & Aesthetic',
+      cta: 'Discover Scents',
     },
     {
       id: 3,
-      tag: 'Trending Now',
       title: 'Aura Of',
       highlight: 'Sophistication',
       subtitle: 'Elevate your daily routine with premium luxury perfumes. Long-lasting, captivating, and uniquely yours.',
-      cta: 'Explore Fragrances',
-      ctaSecondary: 'Shop All Scents',
       image: '/perfume/9.jpeg',
-      accent: 'from-orange-400 to-amber-500',
-      badge1: { text: 'COD', sub: 'Available' },
-      badge2: { text: '7-Day', sub: 'Returns' },
-      stat: 'Natural & Pure',
+      cta: 'Explore Fragrances',
     },
   ];
 
@@ -52,21 +34,16 @@ const HeroSection = () => {
     setCurrentSlide((prev) => (prev + 1) % slides.length);
   }, [slides.length]);
 
-  const handlePrev = useCallback(() => {
-    setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length);
-  }, [slides.length]);
-
   useEffect(() => {
-    // Slower carousel speed (8 seconds)
     const timer = setInterval(() => {
       handleNext();
-    }, 8000);
+    }, 7000);
     return () => clearInterval(timer);
   }, [handleNext]);
 
-  const handleScrollToCategories = (e) => {
+  const handleScrollToProducts = (e) => {
     e.preventDefault();
-    const element = document.getElementById('categories');
+    const element = document.getElementById('products');
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' });
     }
@@ -75,150 +52,92 @@ const HeroSection = () => {
   const slide = slides[currentSlide];
 
   return (
-    <section className="relative w-full min-h-[92vh] lg:h-[92vh] bg-[#FDFBF7] overflow-hidden flex items-center py-16 lg:py-0">
-      {/* Animated background blobs */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        <div className={`absolute -top-32 -left-32 w-96 h-96 bg-gradient-to-br ${slide.accent} opacity-10 rounded-full blur-3xl transition-all duration-1000`} />
-        <div className={`absolute bottom-0 right-0 w-[500px] h-[500px] bg-gradient-to-tl ${slide.accent} opacity-5 rounded-full blur-3xl transition-all duration-1000`} />
-        {/* Grid pattern */}
-        <div className="absolute inset-0 opacity-[0.05]"
-          style={{backgroundImage: 'radial-gradient(circle, #d6d3d1 1px, transparent 1px)', backgroundSize: '40px 40px'}} />
-      </div>
+    <div className="relative h-[85vh] min-h-[600px] bg-stone-950 overflow-hidden">
+      {/* Background Slider */}
+      {slides.map((s, index) => (
+        <div
+          key={s.id}
+          className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
+            index === currentSlide ? 'opacity-100 z-10' : 'opacity-0 z-0'
+          }`}
+        >
+          <div className="absolute inset-0 bg-stone-900/40 z-10" /> {/* Dark overlay */}
+          <img
+            src={s.image}
+            alt={s.title}
+            className={`w-full h-full object-cover object-center transition-transform duration-[10000ms] ${
+              index === currentSlide ? 'scale-110' : 'scale-100'
+            }`}
+          />
+        </div>
+      ))}
 
-      <div className="container mx-auto px-4 sm:px-6 md:px-8 relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+      {/* Decorative ambient background blobs */}
+      <div className="absolute top-1/4 right-0 w-[40rem] h-[40rem] bg-fuchsia-900/30 rounded-full blur-[120px] pointer-events-none z-10 -translate-y-1/2 translate-x-1/3 mix-blend-screen" />
+      <div className="absolute bottom-1/4 left-0 w-[40rem] h-[40rem] bg-lavender-900/30 rounded-full blur-[120px] pointer-events-none z-10 translate-y-1/2 -translate-x-1/3 mix-blend-screen" />
 
-          {/* Text Content */}
-          <div className="order-2 lg:order-1 text-stone-900 space-y-5 md:space-y-6 text-center lg:text-left">
-            {/* Tag badge */}
-            <div
-              key={`tag-${currentSlide}`}
-              className="inline-flex items-center gap-2 bg-white/60 backdrop-blur-md border border-stone-200 text-xs sm:text-sm font-semibold px-4 py-1.5 rounded-full animate-fadeInUp shadow-sm text-stone-800"
+      {/* Content */}
+      <div className="relative z-20 h-full flex flex-col justify-center">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 mt-16 md:mt-24">
+          <span key={`tag-${currentSlide}`} className="inline-block px-4 py-1.5 mb-6 rounded-full border border-lavender-400/30 bg-lavender-500/10 text-lavender-300 text-xs font-bold tracking-[0.2em] uppercase backdrop-blur-sm animate-fadeInUp">
+            {slide.tag}
+          </span>
+          
+          <h1 key={`title-${currentSlide}`} className="text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-playfair font-bold text-white mb-6 leading-[1.1] animate-fadeInUp animation-delay-200">
+            {slide.title} <br className="hidden md:block" />
+            <span className="text-lavender-400 italic font-light">{slide.highlight}</span>
+          </h1>
+          
+          <p key={`sub-${currentSlide}`} className="text-stone-200 text-lg md:text-xl font-light leading-relaxed max-w-lg mb-10 animate-fadeInUp animation-delay-400">
+            {slide.subtitle}
+          </p>
+          
+          <div key={`cta-${currentSlide}`} className="flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-6 animate-fadeInUp animation-delay-600">
+            <button
+              onClick={handleScrollToProducts}
+              className="px-10 py-4 bg-lavender-600 hover:bg-lavender-500 text-white rounded-full font-medium tracking-wide transition-all duration-300 transform hover:-translate-y-1 hover:shadow-[0_0_20px_rgba(139,92,246,0.3)] w-full sm:w-auto"
             >
-              <span className={`w-2 h-2 rounded-full bg-gradient-to-r ${slide.accent} animate-pulse`} />
-              {slide.tag}
-            </div>
-
-            {/* Headline */}
-            <div key={`title-${currentSlide}`} className="animate-fadeInUp animation-delay-200">
-              <h1 className="font-playfair text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-tight tracking-tight">
-                {slide.title}
-                <br />
-                <span className={`bg-gradient-to-r ${slide.accent} bg-clip-text text-transparent italic`}>
-                  {slide.highlight}
-                </span>
-              </h1>
-            </div>
-
-            {/* Subtitle */}
-            <p
-              key={`sub-${currentSlide}`}
-              className="text-stone-600 text-sm sm:text-base md:text-lg max-w-lg mx-auto lg:mx-0 leading-relaxed animate-fadeInUp animation-delay-400 font-light"
+              {slide.cta}
+            </button>
+            <button
+              onClick={handleScrollToProducts}
+              className="px-8 py-4 bg-white/10 hover:bg-white/20 border border-white/20 text-white rounded-full font-medium tracking-wide transition-all duration-300 backdrop-blur-md w-full sm:w-auto"
             >
-              {slide.subtitle}
-            </p>
-
-            {/* Stat strip */}
-            <div
-              key={`stat-${currentSlide}`}
-              className="flex items-center justify-center lg:justify-start gap-4 animate-fadeInUp animation-delay-400"
-            >
-              <div className="flex -space-x-3">
-                {['bg-stone-100','bg-amber-100','bg-rose-100'].map((c,i) => (
-                  <div key={i} className={`w-8 h-8 rounded-full ${c} border-2 border-white flex items-center justify-center text-xs text-stone-800 font-serif italic shadow-sm`}>
-                    {['C','V','+'][i]}
-                  </div>
-                ))}
-              </div>
-              <p className="text-xs sm:text-sm text-stone-500 font-semibold tracking-widest uppercase">{slide.stat}</p>
-            </div>
-
-            {/* CTA Buttons */}
-            <div
-              key={`cta-${currentSlide}`}
-              className="flex flex-col sm:flex-row justify-center lg:justify-start gap-3 sm:gap-5 pt-4 animate-fadeInUp animation-delay-600"
-            >
-              <button
-                onClick={handleScrollToCategories}
-                className={`inline-flex items-center justify-center gap-2 bg-gradient-to-r ${slide.accent} text-white px-8 sm:px-10 py-3.5 sm:py-4 rounded-full font-semibold text-sm sm:text-base hover:shadow-2xl hover:shadow-amber-500/20 transform hover:-translate-y-1 transition-all duration-300 tracking-wide`}
-              >
-                {slide.cta}
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 13l-7 7-7-7m14-6l-7 7-7-7" />
-                </svg>
-              </button>
-              <button
-                onClick={handleScrollToCategories}
-                className="inline-flex items-center justify-center gap-2 bg-white/60 backdrop-blur-md border border-stone-200 text-stone-800 px-6 sm:px-8 py-3.5 sm:py-4 rounded-full font-semibold text-sm sm:text-base hover:bg-white hover:shadow-lg transition-all duration-300"
-              >
-                {slide.ctaSecondary}
-              </button>
-            </div>
-
-            {/* Floating badges — bottom row */}
-            <div
-              key={`badges-${currentSlide}`}
-              className="flex justify-center lg:justify-start gap-3 sm:gap-5 pt-6 animate-fadeInUp animation-delay-600"
-            >
-              <div className="bg-white/80 backdrop-blur-xl border border-stone-100 rounded-2xl px-5 py-3 sm:px-6 sm:py-4 text-center hover:bg-white transition-colors shadow-lg shadow-stone-200/50">
-                <p className="text-xl sm:text-2xl font-playfair font-bold text-stone-900">{slide.badge1.text}</p>
-                <p className="text-[10px] sm:text-xs text-stone-500 font-semibold tracking-wider uppercase mt-1">{slide.badge1.sub}</p>
-              </div>
-              <div className="bg-white/80 backdrop-blur-xl border border-stone-100 rounded-2xl px-5 py-3 sm:px-6 sm:py-4 text-center hover:bg-white transition-colors shadow-lg shadow-stone-200/50">
-                <p className="text-xl sm:text-2xl font-playfair font-bold text-stone-900">{slide.badge2.text}</p>
-                <p className="text-[10px] sm:text-xs text-stone-500 font-semibold tracking-wider uppercase mt-1">{slide.badge2.sub}</p>
-              </div>
-              <div className="bg-white/80 backdrop-blur-xl border border-stone-100 rounded-2xl px-5 py-3 sm:px-6 sm:py-4 text-center hidden sm:block hover:bg-white transition-colors shadow-lg shadow-stone-200/50">
-                <p className="text-xl sm:text-2xl font-playfair font-bold text-amber-500">✓</p>
-                <p className="text-[10px] sm:text-xs text-stone-500 font-semibold tracking-wider uppercase mt-1">Genuine</p>
-              </div>
-            </div>
-          </div>
-
-          {/* Product Image with floating elements */}
-          <div className="order-1 lg:order-2 relative flex items-center justify-center w-full">
-            {/* Glow ring */}
-            <div className={`absolute w-[100%] h-[100%] bg-gradient-to-br ${slide.accent} rounded-full opacity-10 blur-3xl`} />
-
-            {/* Main image container */}
-            <div className="relative z-10 w-full max-w-[280px] sm:max-w-md md:max-w-lg lg:max-w-[550px]">
-              <div className="relative rounded-[2rem] lg:rounded-[3rem] overflow-hidden shadow-2xl shadow-stone-300/50 border border-stone-100 aspect-[4/5] sm:aspect-square group bg-white">
-                <img
-                  key={`img-${currentSlide}`}
-                  src={slide.image}
-                  alt={slide.highlight}
-                  className="w-full h-full object-cover object-center animate-fadeIn group-hover:scale-105 transition-transform duration-[1.5s] ease-out mix-blend-multiply"
-                  style={{ transition: 'opacity 0.7s ease' }}
-                />
-              </div>
-
-              {/* Floating card — top right (hidden on tiny screens) */}
-              <div className="absolute -top-4 -right-4 sm:-right-8 bg-white/90 backdrop-blur-xl border border-stone-100 rounded-2xl shadow-xl shadow-stone-200/50 px-4 py-3 sm:px-5 sm:py-4 flex items-center gap-3 sm:gap-4 animate-fadeIn z-20">
-                <div className={`w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br ${slide.accent} rounded-xl flex items-center justify-center text-white text-lg sm:text-xl shadow-inner`}>
-                  ✨
-                </div>
-                <div>
-                  <p className="font-playfair font-bold text-stone-900 text-sm sm:text-base">Top Rated</p>
-                  <div className="flex text-amber-500 text-xs sm:text-sm mt-0.5">★★★★★</div>
-                </div>
-              </div>
-
-              {/* Floating card — bottom left (hidden on tiny screens) */}
-              <div className="absolute -bottom-4 -left-4 sm:-left-8 bg-white/90 backdrop-blur-xl border border-stone-100 rounded-2xl shadow-xl shadow-stone-200/50 px-4 py-3 sm:px-5 sm:py-4 flex items-center gap-3 sm:gap-4 animate-fadeIn z-20">
-                <div className={`w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br ${slide.accent} rounded-xl flex items-center justify-center text-white text-lg sm:text-xl shadow-inner`}>
-                  ✧
-                </div>
-                <div>
-                  <p className="font-playfair font-bold text-stone-900 text-sm sm:text-base">Premium</p>
-                  <p className="text-stone-500 text-xs sm:text-sm mt-0.5 tracking-wide uppercase font-semibold">Collection</p>
-                </div>
-              </div>
-            </div>
+              Learn More
+            </button>
           </div>
         </div>
 
-        {/* Manual controls removed per request */}
+        {/* Slide Indicators */}
+        <div className="absolute bottom-12 left-6 right-6 container mx-auto flex items-center justify-between z-30">
+          <div className="flex gap-3">
+            {slides.map((_, idx) => (
+              <button
+                key={idx}
+                onClick={() => setCurrentSlide(idx)}
+                className={`h-1.5 rounded-full transition-all duration-500 ${idx === currentSlide ? 'w-12 bg-lavender-400' : 'w-4 bg-white/30 hover:bg-white/60'}`}
+                aria-label={`Go to slide ${idx + 1}`}
+              />
+            ))}
+          </div>
+          
+          <div className="hidden sm:flex gap-4">
+            <div className="text-right text-white/60 text-sm font-light">
+              <span className="text-white font-medium">{String(currentSlide + 1).padStart(2, '0')}</span> / {String(slides.length).padStart(2, '0')}
+            </div>
+          </div>
+        </div>
       </div>
+      
+      <style>{`
+        @keyframes zoomEffect {
+          from { transform: scale(1); }
+          to { transform: scale(1.05); }
+        }
+        .animation-delay-200 { animation-delay: 200ms; }
+        .animation-delay-400 { animation-delay: 400ms; }
+        .animation-delay-600 { animation-delay: 600ms; }
+      `}</style>
     </section>
   );
 };

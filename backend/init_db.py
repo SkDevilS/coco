@@ -1,5 +1,5 @@
 """
-Database Initialization Script for Barringer Pharma
+Database Initialization Script for Coco Ventures
 Creates all tables and initializes with default admin user
 """
 
@@ -17,7 +17,7 @@ def init_database():
         print("✓ Database tables created successfully!")
         
         # Check if admin user already exists
-        admin_email = 'admin@barringerpharma.shop'
+        admin_email = 'admin@cocoventures.store'
         existing_admin = User.query.filter_by(email=admin_email).first()
         
         if not existing_admin:

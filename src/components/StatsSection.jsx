@@ -43,21 +43,21 @@ const StatsSection = () => {
   ];
 
   return (
-    <section className="bg-white py-12 mb-16">
+    <section className="py-12 bg-white">
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
           {stats.map((stat) => (
             <div
               key={stat.id}
-              className="text-center p-6 rounded-xl bg-gradient-to-br from-amber-50 to-orange-50 hover:from-amber-100 hover:to-orange-100 transition-all duration-300 transform hover:scale-105 border border-amber-100/50"
+              className="group text-center p-8 rounded-[2rem] bg-gradient-to-br from-lavender-50 to-purple-50 hover:shadow-xl hover:shadow-lavender-200 transition-all duration-500 hover:-translate-y-2 border border-lavender-100"
             >
-              <div className="flex justify-center mb-3 text-amber-600">
+              <div className="flex justify-center mb-4 text-lavender-500 group-hover:scale-110 group-hover:rotate-3 transition-transform duration-500">
                 {stat.icon}
               </div>
-              <div className="text-3xl md:text-4xl font-playfair font-bold text-stone-800 mb-2">
+              <div className="text-4xl md:text-5xl font-playfair font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-700 to-fuchsia-600 mb-2">
                 {stat.number}
               </div>
-              <div className="text-sm md:text-base text-stone-600 font-medium">
+              <div className="text-sm md:text-base text-stone-600 font-medium tracking-wide">
                 {stat.label}
               </div>
             </div>

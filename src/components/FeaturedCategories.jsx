@@ -36,12 +36,12 @@ const categoryIcons = {
 };
 
 const gradients = [
-  'from-amber-500 to-orange-400',
-  'from-rose-400 to-pink-500',
-  'from-stone-500 to-stone-400',
-  'from-amber-600 to-amber-500',
-  'from-rose-500 to-orange-400',
-  'from-stone-600 to-stone-400',
+  'from-lavender-500 to-purple-500',
+  'from-purple-400 to-indigo-500',
+  'from-indigo-400 to-blue-500',
+  'from-lavender-600 to-purple-600',
+  'from-purple-500 to-fuchsia-500',
+  'from-indigo-500 to-lavender-500',
 ];
 
 const FeaturedCategories = () => {
@@ -89,12 +89,12 @@ const FeaturedCategories = () => {
       <div className="container mx-auto px-4">
         {/* Section Header */}
         <div className="text-center mb-10 md:mb-14">
-          <span className="inline-block bg-amber-50 text-amber-700 border border-amber-200 text-sm font-semibold px-5 py-1.5 rounded-full mb-5 tracking-wide uppercase">
+          <span className="inline-block bg-lavender-50 text-lavender-700 border border-lavender-200 text-sm font-semibold px-5 py-1.5 rounded-full mb-5 tracking-wide uppercase">
             Our Categories
           </span>
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-playfair font-bold text-stone-900 mb-4">
             Shop by{' '}
-            <span className="bg-gradient-to-r from-amber-600 to-orange-400 bg-clip-text text-transparent italic">
+            <span className="bg-gradient-to-r from-lavender-600 to-purple-500 bg-clip-text text-transparent italic">
               Category
             </span>
           </h2>
@@ -137,3 +137,4 @@ const FeaturedCategories = () => {
 };
 
 export default FeaturedCategories;
+
